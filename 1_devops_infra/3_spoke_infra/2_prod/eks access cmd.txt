@@ -1,0 +1,10 @@
+aws eks update-kubeconfig --name ed-eks-01 --region us-east-1
+
+---->above cmd is only applicable either the separate linux server or windows machine has configured with aws access key and secret key
+     or a iam role with eks permissions should be attached to linux server 
+     after attaching role only we can use above cmd to access or upadte kubeconfig 
+(i think)-->we can access cluster using worker node also but i think it is not reccommended 
+
+
+in our cluster both controlplane and workernodes are in pvt subnets 
+but recommened way is controlplane is in public subnets and worker nodes in pvt subnets 
