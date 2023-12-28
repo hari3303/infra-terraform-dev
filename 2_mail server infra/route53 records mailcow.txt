@@ -1,0 +1,88 @@
+1>Record type--> NS (automatically created when hosted zone created) 
+Record name
+hbgseries.in    
+Value  
+    ns-1069.awsdns-05.org  ---|
+    ns-528.awsdns-02.net   ---|  -------> copy this 4 nameservers into nameservers from where we bought domain (ex:hosteasy.com or godaddy.com)
+    ns-321.awsdns-40.com   ---|
+    ns-1873.awsdns-42.co.uk --|
+
+2>Record type  --> SOA (automatically created when hosted zone created) 
+Record name
+hbgseries.in
+Value
+    ns-1069.awsdns-05.org. awsdns-hostmaster.amazon.com. 1 7200 900 1209600 86400
+#####################################################################
+3>Record type  -->MX
+Record name
+hbgseries.in
+Value
+1 mail.hbgseries.in ( here 1 is weight refer mx record syntax)
+
+4>Record type  -->TXT
+Record name
+hbgseries.in
+Value
+"v=spf1 ip4:3.133.233.131 -all" (replace ip with eip)
+
+5>Record type  -->TXT
+Record name
+_dmarc.hbgseries.in
+Value
+"v=DMARC1; p=none; rua=mailto:e2mfnqwx@ag.us.dmarcian.com, mailto:dmarc@hbgseries.in"
+
+6>Record type  -->TXT
+Record name
+dkim._domainkey.hbgseries.in   
+Value   (divide the value into two parts with "" then only it won't show error like invalid 255 error)
+"v=DKIM1;k=rsa;t=s;s=email;p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAok7fbjnR/vJItRbZrMPaFZortBG9KCihdsSnToecDcHsT2dm695UpqN2GXejaSitwrB8pg0HJ0AZ9mXSy59ABnw0EUVZWh91O1opu2i5XPPvwEkHs5RdxhpbNDlgbqAId6fal8rIuFpOwdzKUyl7JJyygHpRtRtgHQCTC4kmVO5axN6""/rQ6Yg2qeqpPcG9V5DRXYXFtqo4sQWqY+AA+wzuxx9inqJfyVodM6RCHxEuAK0BboauSz3/398QaQFPST1tJKEBbycNnULbWPQvN9LMh3R0myoTY9zKtiVWIlSmB9At1JLIMeLZNYAzsvBXSzkatwg92AFgLAyZgleIVGyQIDAQAB"
+
+7>Record type  -->SRV
+Record name
+_autodiscover._tcp.hbgseries.in
+Value
+1 10 443 mail.hbgseries.in  ( here 1 is weight ,10 is priority refer srv record syntax)
+
+8>Record type  -->CNAME
+Record name
+autoconfig.hbgseries.in
+Value
+mail.hbgseries.in
+
+9>Record type  -->CNAME
+Record name
+autodiscover.hbgseries.in
+Value
+mail.hbgseries.in
+
+10>Record type  -->CNAME  (SES)-|
+11>Record type  -->CNAME  (SES)-|---->dkim records can automatically created when ses configured or we can manually created similarly 
+12>Record type  -->CNAME  (SES)-|
+###########
+13>Record type  -->A   ----> (for every nginx server we create similar A type records with pvt ips as values ex:jenkins.hbgseries.in)
+Record name
+mail.hbgseries.in -->(only  for mailcow server)        or (create simalarly jenkins.hbgseries.in ,sonarqube.hbgseries.in,promethesus.hbgseries.in,grafana.hbgseries.in,kibana.hbgseries.in)
+Value
+3.133.233.135  (eip address only for mailcow server)   or  (similarly for pvt ip of jenkins,sonarqube,prometheus,grafana,kibana)-->only pvt ip(10.2.0.1)no need of eip for this servers
+################
+for PTR record in aws ohio(us-east-2) create server and in associate eip and in actions -->update reverse DNS as :mail.hbgseries.in(domain)-->validation: nslookup eip address -->output:mail.hbgseries.in
+####################################################################################################################################################
+14>Record type  -->A   (for end user routing i.e, hbgseries.in (production))
+Record name
+@/empty
+enable alias
+Route traffic to
+Alias to CloudFront distribution
+us east(n.v) (default)
+choose distribution :here select our created distribution
+
+#########################################################################################
+15>Record type  -->A   (for end user routing i.e, dev-hbgseries.in (non-production))
+Record name
+@/empty
+enable alias
+Route traffic to
+Alias to Network Load Balancer or  Alias to Application and Classic Load Balancer
+choose region:us east(n.v)
+choose load balancer: here select our created ELB (which was created by nginx ingress controller from k8s)
+
