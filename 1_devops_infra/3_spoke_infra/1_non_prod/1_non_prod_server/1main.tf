@@ -1,7 +1,7 @@
 provider "aws" {
-    access_key = "AKIAUROTNPSJQOU3MM4F" # now no need of "${}" its deprected
-    secret_key = "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" #here accesskey and secret key already configred in kops cmd using aws configure so now no here no need to provide 
-    region = "us-east-1"
+    #access_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxx" # now no need of "${}" its deprected
+    #secret_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" #here accesskey and secret key already configred in kops cmd using aws configure so now no here no need to provide 
+    #region = "us-east-1"
     # #version = "~>2.0" #means from 2.0 version to 3.0 in between a stable version is downloaded 
 }
 

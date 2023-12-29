@@ -6,6 +6,9 @@ on:
   # push:
   #   branches:
   #     - main
+env:
+  AWS_REGION: us-east-1
+  TF_FOLDER: 1_devops infra\2_hub_infra\1_hub_servers
 
 jobs:
   Deploy_Resources:
@@ -14,6 +17,7 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2  # Checks out the code from the repository
+        path: ${{ env.TF_FOLDER }}
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -43,7 +47,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run:  terraform plan -no-color -var-file=myvars.tfvars -target=module.example  # Creates an execution plan for Terraform changes
+        run:  terraform plan -no-color -var-file=3hub.tfvars -target=module.example  # Creates an execution plan for Terraform changes
         continue-on-error: true  # Continue to the next step even if there is a plan error
 
       - name: Terraform Apply
@@ -51,8 +55,8 @@ jobs:
         run: terraform apply -auto-approve -var-file=myvars.tfvars -target=module.example  # Applies Terraform changes (auto-approve without asking for confirmation)
         continue-on-error: true  # Continue to the next step even if there is an apply error
 
-      - name: Terraform Destroy
-        id: Destory
-        run: terraform destroy -auto-approve -var-file=myvars.tfvars -target=module.example  # Destroys Terraform-managed infrastructure (auto-approve without asking for confirmation)
-        continue-on-error: true  # Continue to the next step even if there is a destroy error
+      # - name: Terraform Destroy
+      #   id: Destory
+      #   run: terraform destroy -auto-approve -var-file=myvars.tfvars -target=module.example  # Destroys Terraform-managed infrastructure (auto-approve without asking for confirmation)
+      #   continue-on-error: true  # Continue to the next step even if there is a destroy error
 

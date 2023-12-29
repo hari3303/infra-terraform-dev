@@ -1,6 +1,6 @@
 provider "aws" {
-    access_key = "AKIAUAKFM2E2PR75FBMC" # now no need of "${}" its deprected
-    secret_key = "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" #here accesskey and secret key already configred in windows cmd using aws configure so now no here no need to provide 
+    #access_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxx" # now no need of "${}" its deprected
+    #secret_key = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" #here accesskey and secret key already configred in windows cmd using aws configure so now no here no need to provide 
     region = "us-east-2"
     # #version = "~>2.0" #means from 2.0 version to 3.0 in between a stable version is downloaded 
 }
