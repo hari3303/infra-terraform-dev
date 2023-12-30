@@ -24,6 +24,10 @@ jobs:
 
       - name: List Directory Contents
         run: ls -R ${{ env.TF_FOLDER }}
+      - name: Debug Info
+        run: |
+            pwd
+            ls -R
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
