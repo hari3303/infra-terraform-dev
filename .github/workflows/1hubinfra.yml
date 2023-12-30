@@ -9,7 +9,7 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  TF_FOLDER: '1_devops infra/2_hub_infra/1_hub_servers'
+  TF_FOLDER: '1_devops_infra/2_hub_infra/1_hub_servers'
 
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: ${{ env.TF_FOLDER }}  # Use 'with' to specify path
-          
+
       - name: List Directory Contents
         run: ls -R ${{ env.TF_FOLDER }}
 
