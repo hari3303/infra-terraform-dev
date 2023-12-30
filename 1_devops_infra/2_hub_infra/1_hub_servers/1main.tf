@@ -10,7 +10,7 @@ module "hub_backend_s3" {
   bucketname = var.bucketname
   acl = var.acl  
   versioning = var.versioning  
-  prevent_destroy = var.prevent_destroy
+  
   
 }
 ###################################################################################

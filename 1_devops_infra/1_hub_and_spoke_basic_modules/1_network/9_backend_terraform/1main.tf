@@ -7,7 +7,7 @@ resource "aws_s3_bucket" "hub_terraform_state" {
   }
 
   lifecycle {
-    prevent_destroy = var.prevent_destroy  # Prevent accidental deletion of the bucket
+    prevent_destroy = false  # Prevent accidental deletion of the bucket
   }
 }
 

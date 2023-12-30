@@ -1,7 +1,7 @@
 bucketname = 1-hub-terraform-state-hbseries
 acl = "private"
 versioning = false
-prevent_destroy = false
+
 
 #################################################
 vpc_cidr = "10.2.0.0/16"
