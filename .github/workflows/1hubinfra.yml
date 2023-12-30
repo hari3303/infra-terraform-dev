@@ -1,4 +1,4 @@
-name: Terraform AWS Workflow
+name: 1 HUB INFRA 
 
 on:
   workflow_dispatch:
@@ -18,7 +18,16 @@ jobs:
     - uses: actions/checkout@v2.5.0        
     - name: Setup Terraform CLI
       uses: hashicorp/setup-terraform@v2.0.2
-    - name: Terraform init, plan and apply
+
+    - name: Terraform fmt
+      run: |
+        echo `pwd`
+        echo "tfpath ${{ github.event.inputs.tfpath }}"
+        cd ${{ github.event.inputs.tfpath }}
+        echo "** Running Terraform fmt**"
+        terraform fmt
+
+    - name: Terraform init
       run: |
         echo `pwd`
         echo "tfpath ${{ github.event.inputs.tfpath }}"
@@ -26,5 +35,18 @@ jobs:
         echo "** Running Terraform Init**"
         terraform init
 
+    - name: Terraform validate 
+      run: |
+        echo `pwd`
+        echo "tfpath ${{ github.event.inputs.tfpath }}"
+        cd ${{ github.event.inputs.tfpath }}
         echo "** Running Terraform Validate**"
         terraform validate
+
+     - name: Terraform Plan 
+       run: |
+        echo `pwd`
+        echo "tfpath ${{ github.event.inputs.tfpath }}"
+        cd ${{ github.event.inputs.tfpath }}
+        echo "** Running Terraform Plan**"
+        terraform plan --var-file=3hubtf.vars -target module.hub_backend_s3
