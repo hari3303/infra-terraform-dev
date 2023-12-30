@@ -9,7 +9,8 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  TF_FOLDER: '1_devops infra\\2_hub_infra\\1_hub_servers'  # Escape the backslashes in the path
+  TF_FOLDER: '1_devops infra/2_hub_infra/1_hub_servers'
+
 
 jobs:
   Deploy_Resources:
