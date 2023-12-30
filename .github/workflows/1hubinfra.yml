@@ -1,60 +1,34 @@
-name: 1 HUB INFRA
+name: Terraform Workflow
 
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
-  # Uncomment the lines below if you want to trigger on pushes to the main branch
-  # push:
-  #   branches:
-  #     - main
 
 env:
   AWS_REGION: us-east-1
-  TF_FOLDER: '1_devops_infra/2_hub_infra/1_hub_servers'
+  TF_FOLDER: '1_devops_infra/2_hub_infra/1_hub_servers'  # Updated path
 
 jobs:
-  Deploy_Resources:
-    runs-on: ubuntu-latest  # Specifies the operating system for the job
+  deploy_resources:
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
-          path: ${{ env.TF_FOLDER }}  # Use 'with' to specify path
-        
+          path: ${{ env.TF_FOLDER }}
 
       - name: List Directory Contents
         working-directory: ${{ env.TF_FOLDER }}
         run: ls -R ${{ env.TF_FOLDER }}
 
-      - name: Install Terraform
-        working-directory: ${{ env.TF_FOLDER }}
-        run: |
-          TERRAFORM_VERSION="1.0.0"  # Replace with your desired Terraform version
-          wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-          unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-          rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-          terraform --version
-
-      - name: Terraform fmt
-        id: fmt
-        working-directory: ${{ env.TF_FOLDER }}
-        run: |
-          terraform fmt  # Formats Terraform code
-       # continue-on-error: true  # Continue to the next step even if there are errors
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v1
 
       - name: Terraform Init
-        id: init
         working-directory: ${{ env.TF_FOLDER }}
         run: terraform init
 
-      - name: Terraform Validate
-        id: validate
-        working-directory: ${{ env.TF_FOLDER }}
-        run: terraform validate -no-color  # Validates the Terraform configuration
-        #continue-on-error: true  # Continue to the next step even if there are validation errors
-
-      - name: Terraform Plan
-        id: plan
-        working-directory: ${{ env.TF_FOLDER }}
-        run: terraform plan -no-color --var-file=3hub.tfvars -target=module.hub_backend_s3  # Creates an execution plan for Terraform changes
-       # continue-on-error: true  # Continue to the next step even if there is a plan error
+      # Add other Terraform commands such as validate, plan, apply as needed
