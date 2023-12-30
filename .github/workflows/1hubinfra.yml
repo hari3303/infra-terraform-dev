@@ -26,11 +26,12 @@ jobs:
         run: ls -R ${{ env.TF_FOLDER }}
 
       - name: Install Terraform
+        working-directory: ${{ env.TF_FOLDER }}
         run: |
           TERRAFORM_VERSION="1.0.0"  # Replace with your desired Terraform version
           wget https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip
           unzip terraform_${TERRAFORM_VERSION}_linux_amd64.zip
-          sudo mv terraform /usr/local/bin/
+          rm terraform_${TERRAFORM_VERSION}_linux_amd64.zip
           terraform --version
 
       - name: Terraform fmt
