@@ -6,7 +6,7 @@ provider "aws" {
 }
 
 module "hub_backend_s3" {
-  source = "../../1_hub_and_spoke_basic_modules/1_network/9_backend_terraform"
+  source = "../../1_hub_and_spoke_basic_modules/1_network/9_s3_bucket_terraform"
   
   bucketname = var.bucketname
   acl = var.acl  
