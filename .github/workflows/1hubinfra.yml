@@ -32,3 +32,5 @@ jobs:
         run: terraform init
 
       # Add other Terraform commands such as validate, plan, apply as needed
+      - name: List Repository Contents
+        run: ls -R
