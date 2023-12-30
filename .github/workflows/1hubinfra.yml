@@ -8,7 +8,7 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  TF_FOLDER: '1_devops_infra/2_hub_infra/1_hub_servers/1_devops_infra/2_hub_infra/1_hub_servers'
+  TF_FOLDER: 1_devops_infra/2_hub_infra/1_hub_servers
 
 jobs:
   deploy_resources:
