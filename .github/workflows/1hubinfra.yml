@@ -1,14 +1,15 @@
 name: 1 HUB INFRA
 
-# Trigger the workflow on pushes to the main branch
 on:
   workflow_dispatch:
+  # Uncomment the lines below if you want to trigger on pushes to the main branch
   # push:
   #   branches:
   #     - main
+
 env:
   AWS_REGION: us-east-1
-  TF_FOLDER: 1_devops infra\2_hub_infra\1_hub_servers
+  TF_FOLDER: '1_devops infra\\2_hub_infra\\1_hub_servers'  # Escape the backslashes in the path
 
 jobs:
   Deploy_Resources:
@@ -16,47 +17,42 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2  # Checks out the code from the repository
-        path: ${{ env.TF_FOLDER }}
+        uses: actions/checkout@v2
+        with:
+          path: ${{ env.TF_FOLDER }}  # Use 'with' to specify path
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'  # Access key for AWS authentication
-          aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'  # Secret key for AWS authentication
-          aws-region: us-east-1  # AWS region to operate in
+          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+          aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+          aws-region: us-east-1
 
       - name: Terraform Install
-        uses: hashicorp/setup-terraform@v1  # Sets up Terraform by installing it
+        uses: hashicorp/setup-terraform@v1
 
       - name: Terraform fmt
         id: fmt
         run: |
-          terraform --version  # Prints Terraform version
-          terraform fmt  # Formats Terraform code
-        continue-on-error: true  # Continue to the next step even if there are errors
+          terraform --version
+          terraform fmt
+        continue-on-error: true
 
       - name: Terraform Init
         id: init
-        run: terraform init  # Initializes Terraform in the working directory
+        run: terraform init
 
       - name: Terraform Validate
         id: validate
-        run: terraform validate -no-color  # Validates the Terraform configuration
-        continue-on-error: true  # Continue to the next step even if there are validation errors
+        run: terraform validate -no-color
+        continue-on-error: true
 
       - name: Terraform Plan
         id: plan
-        run:  terraform plan -no-color -var-file=3hub.tfvars -target=module.hub_backend_s3  # Creates an execution plan for Terraform changes
-        continue-on-error: true  # Continue to the next step even if there is a plan error
+        run: terraform plan -no-color -var-file=3hub.tfvars -target=module.hub_backend_s3
+        continue-on-error: true
 
       - name: Terraform Apply
         id: Apply
-        run: terraform apply -auto-approve -var-file=3hub.tfvars -target=module.hub_backend_s3  # Applies Terraform changes (auto-approve without asking for confirmation)
-        continue-on-error: true  # Continue to the next step even if there is an apply error
-
-      # - name: Terraform Destroy
-      #   id: Destory
-      #   run: terraform destroy -auto-approve -var-file=myvars.tfvars -target=module.example  # Destroys Terraform-managed infrastructure (auto-approve without asking for confirmation)
-      #   continue-on-error: true  # Continue to the next step even if there is a destroy error
-
+        run: terraform apply -auto-approve -var-file=3hub.tfvars -target=module.hub_backend_s3
+        continue-on-error: true
