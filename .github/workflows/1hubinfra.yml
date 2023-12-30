@@ -53,7 +53,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run:  terraform plan -no-color -var-file=3hub.tfvars -target=module.hub_backend_s3  # Creates an execution plan for Terraform changes
+        run:  terraform plan -no-color --var-file=3hub.tfvars -target=module.hub_backend_s3  # Creates an execution plan for Terraform changes
        # continue-on-error: true  # Continue to the next step even if there is a plan error
 
       - name: Terraform Apply
