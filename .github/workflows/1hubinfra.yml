@@ -21,6 +21,9 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: ${{ env.TF_FOLDER }}  # Use 'with' to specify path
+          
+      - name: List Directory Contents
+        run: ls -R ${{ env.TF_FOLDER }}
 
       - name: AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
