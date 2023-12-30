@@ -1,8 +1,3 @@
-bucketname = 1-hub-terraform-state-hbseries
-acl = "private"
-versioning = false
-
-
 #################################################
 vpc_cidr = "10.2.0.0/16"
 vpc_name = "1_hub_infra"

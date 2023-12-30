@@ -1,9 +1,3 @@
-variable "bucketname" {}
-variable "acl" {}
-variable "versioning" {}
-
-
-###################################################
 variable "vpc_cidr" {}
 variable "vpc_name" {}
 variable "pub_subnet_1" {}

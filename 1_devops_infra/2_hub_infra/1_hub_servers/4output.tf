@@ -1,4 +1,3 @@
-
 output "jenkins_public_8080" {
   description ="ips"
   value = module.jenkins_instance.public_ip
