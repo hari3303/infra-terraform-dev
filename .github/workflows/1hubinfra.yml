@@ -26,18 +26,12 @@ jobs:
         working-directory: ${{ env.TF_FOLDER }}
         run: ls -R ${{ env.TF_FOLDER }}
 
-      - name: Debug Info
-        working-directory: ${{ env.TF_FOLDER }}
-        run: |
-            pwd
-            ls -R
-
-      - name: AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'
-          aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
-          aws-region: us-east-1
+      # - name: AWS Credentials
+      #   uses: aws-actions/configure-aws-credentials@v1
+      #   with:
+      #     aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'
+      #     aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'
+      #     aws-region: us-east-1
 
       - name: Terraform Install
         uses: hashicorp/setup-terraform@v1
@@ -67,8 +61,8 @@ jobs:
         run:  terraform plan -no-color --var-file=3hub.tfvars -target=module.hub_backend_s3  # Creates an execution plan for Terraform changes
        # continue-on-error: true  # Continue to the next step even if there is a plan error
 
-      - name: Terraform Apply
-        id: Apply
-        working-directory: ${{ env.TF_FOLDER }}
-        run: terraform apply -auto-approve -var-file=3hub.tfvars -target=module.hub_backend_s3  # Applies Terraform changes (auto-approve without asking for confirmation)
-       # continue-on-error: true  # Continue to the next step even if there is an apply error
+      # - name: Terraform Apply
+      #   id: Apply
+      #   working-directory: ${{ env.TF_FOLDER }}
+      #   run: terraform apply -auto-approve -var-file=3hub.tfvars -target=module.hub_backend_s3  # Applies Terraform changes (auto-approve without asking for confirmation)
+      #  # continue-on-error: true  # Continue to the next step even if there is an apply error
