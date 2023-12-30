@@ -34,9 +34,9 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: |
-          terraform --version
-          terraform fmt
-        continue-on-error: true
+          terraform --version  # Prints Terraform version
+          terraform fmt  # Formats Terraform code
+       # continue-on-error: true  # Continue to the next step even if there are errors
 
       - name: Terraform Init
         id: init
@@ -44,15 +44,15 @@ jobs:
 
       - name: Terraform Validate
         id: validate
-        run: terraform validate -no-color
-        continue-on-error: true
+        run: terraform validate -no-color  # Validates the Terraform configuration
+        #continue-on-error: true  # Continue to the next step even if there are validation errors
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color -var-file=3hub.tfvars -target=module.hub_backend_s3
-        continue-on-error: true
+        run:  terraform plan -no-color -var-file=3hub.tfvars -target=module.hub_backend_s3  # Creates an execution plan for Terraform changes
+       # continue-on-error: true  # Continue to the next step even if there is a plan error
 
       - name: Terraform Apply
         id: Apply
-        run: terraform apply -auto-approve -var-file=3hub.tfvars -target=module.hub_backend_s3
-        continue-on-error: true
+        run: terraform apply -auto-approve -var-file=3hub.tfvars -target=module.hub_backend_s3  # Applies Terraform changes (auto-approve without asking for confirmation)
+       # continue-on-error: true  # Continue to the next step even if there is an apply error
