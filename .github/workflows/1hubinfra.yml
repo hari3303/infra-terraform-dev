@@ -6,8 +6,8 @@ on:
 jobs:
   terraform:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ../../1_devops_infra/2_hub_infra/1_hub_servers
+    # env:
+    #   working-directory: ../../1_devops_infra/2_hub_infra/1_hub_servers
 
     steps:
       - name: Checkout Code
