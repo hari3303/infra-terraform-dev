@@ -1,34 +1,16 @@
 name: Terraform Workflow
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
-env:
-  AWS_REGION: us-east-1
-  TF_FOLDER: 1_devops_infra/2_hub_infra/1_hub_servers
-
 jobs:
-  deploy_resources:
+  terraform:
     runs-on: ubuntu-latest
+    env:
+      working-directory: 1_devops_infra/2_hub_infra/1_hub_servers
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-        with:
-          path: ${{ env.TF_FOLDER }}
-      - name: List Directory Contents
-        working-directory: ${{ env.TF_FOLDER }}
-        run: ls -R
 
 
-      - name: Set up Terraform
-        uses: hashicorp/setup-terraform@v1
-        with:
-          terraform_version: latest
-
-      - name: Terraform Init
-        working-directory: ${{ env.TF_FOLDER }}
-        run: terraform init
