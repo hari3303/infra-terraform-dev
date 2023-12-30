@@ -1,5 +1,5 @@
 bucketname = 1-hub-terraform-state-hbseries
-acl = "private"
+acl = private
 versioning = false
 
 
