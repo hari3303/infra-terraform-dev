@@ -45,8 +45,8 @@ jobs:
 
      - name: Terraform Plan 
        run: |
-        echo `pwd`
-        echo "tfpath ${{ github.event.inputs.tfpath }}"
-        cd ${{ github.event.inputs.tfpath }}
-        echo "** Running Terraform Plan**"
-        terraform plan --var-file=3hubtf.vars -target module.hub_backend_s3
+         echo `pwd`
+         echo "tfpath ${{ github.event.inputs.tfpath }}"
+         cd ${{ github.event.inputs.tfpath }}
+         echo "** Running Terraform Plan**"
+         terraform plan --var-file=3hubtf.vars -target module.hub_backend_s3
