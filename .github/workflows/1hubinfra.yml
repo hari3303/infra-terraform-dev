@@ -8,7 +8,7 @@ on:
 
 env:
   AWS_REGION: us-east-1
-  TF_FOLDER: '1_devops_infra/2_hub_infra/1_hub_servers'  # Updated path
+  TF_FOLDER: '1_devops_infra/2_hub_infra/1_hub_servers/1_devops_infra/2_hub_infra/1_hub_servers'
 
 jobs:
   deploy_resources:
@@ -26,11 +26,9 @@ jobs:
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: latest
 
       - name: Terraform Init
         working-directory: ${{ env.TF_FOLDER }}
         run: terraform init
-
-      # Add other Terraform commands such as validate, plan, apply as needed
-      - name: List Repository Contents
-        run: ls -R
