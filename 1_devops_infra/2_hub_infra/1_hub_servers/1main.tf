@@ -11,19 +11,25 @@ module "hub_backend_s3" {
   bucketname = var.bucketname
   acl = var.acl  
   versioning = var.versioning  
-  
-  
 }
 
 terraform {
   backend "s3" {
-    bucket         =  module.hub_backend_s3.s3_bucket_name
+    bucket         = "your-existing-s3-bucket-name"  # Replace with your actual S3 bucket name
     key            = "terraform.tfstate"  # State file name
     region         = "us-east-1"  # Set the AWS region where the S3 bucket is located
     #encrypt        = true  # Enable server-side encryption for the state file
     #dynamodb_table = "terraform_locks"  # Optional: Use a DynamoDB table for state locking
   }
 }
+
+data "terraform_remote_state" "hub_backend_s3" {
+  backend = "s3"
+  config = {
+    region = "us-east-1"
+  }
+}
+
 
 ###################################################################################
 
