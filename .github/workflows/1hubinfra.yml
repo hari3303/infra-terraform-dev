@@ -7,4 +7,23 @@ on:
       tfpath:
         description: 'TF File Path'     
         required: false
-        default: 'aws_samples/create_ec2'
+        default: '1_devops_infra/2_hub_infra/1_hub_servers'
+jobs:
+  tf_code_check:
+    name: Terraform Validation and Build
+    runs-on: ubuntu-latest
+
+    if:  ${{ inputs.tfpath }} 
+    steps:
+    - uses: actions/checkout@v2.5.0        
+    - name: Setup Terraform CLI
+      uses: hashicorp/setup-terraform@v2.0.2
+    - name: Terraform init, plan and apply
+      run: |
+        echo `pwd`
+        echo "tfpath ${{ github.event.inputs.tfpath }}"
+        echo "** Running Terraform Init**"
+        terraform init
+
+        echo "** Running Terraform Validate**"
+        terraform validate
