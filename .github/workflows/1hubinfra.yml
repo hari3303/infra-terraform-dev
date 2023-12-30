@@ -18,10 +18,10 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
-        working-directory: ${{ env.TF_FOLDER }}
-        # with:
-        #   path: ${{ env.TF_FOLDER }}  # Use 'with' to specify path
-
+        with:
+          path: ${{ env.TF_FOLDER }}  # Use 'with' to specify path
+        run: ls -R ${{ env.TF_FOLDER }}
+        
       - name: List Directory Contents
         working-directory: ${{ env.TF_FOLDER }}
         run: ls -R ${{ env.TF_FOLDER }}
