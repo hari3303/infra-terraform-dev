@@ -1,3 +1,8 @@
+bucketname = 2-nonprod-terraform-state-hbseries
+acl = "private"
+versioning = false
+prevent_destroy = false
+
 vpc_cidr = "10.4.0.0/16"
 vpc_name = "1_non_prod_infra"
 pub_subnet_1 = "10.4.1.0/24"

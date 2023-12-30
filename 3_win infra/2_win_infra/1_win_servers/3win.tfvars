@@ -1,3 +1,8 @@
+bucketname = 3-win-terraform-state-hbseries
+acl = "private"
+versioning = false
+prevent_destroy = false
+
 vpc_cidr = "10.1.0.0/16"
 vpc_name = "1_win_infra"
 pub_subnet_1 = "10.1.1.0/24"

@@ -1,3 +1,9 @@
+variable "bucketname" {}
+variable "acl" {}
+variable "versioning" {}
+variable "prevent_destroy"{}
+
+###################################################
 variable "vpc_cidr" {}
 variable "vpc_name" {}
 variable "pub_subnet_1" {}

@@ -1,3 +1,8 @@
+bucketname = 3-mail-terraform-state-hbseries
+acl = "private"
+versioning = false
+prevent_destroy = false
+
 vpc_cidr = "10.3.0.0/16"
 vpc_name = "1_mail_infra"
 pub_subnet_1 = "10.3.1.0/24"
