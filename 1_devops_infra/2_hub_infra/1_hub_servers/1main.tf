@@ -7,7 +7,7 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket         = terraform-state-hbseries  # create a  pvt S3 bucket first 
+    bucket         = "terraform-state-hbseries"  # create a  pvt S3 bucket first 
     key            = "hubterraform.tfstate"  # State file name
     region         = "us-east-1"  # Set the AWS region where the S3 bucket is located
     encrypt        = true  # Enable server-side encryption for the state file
