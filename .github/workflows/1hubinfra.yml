@@ -1,20 +1,10 @@
-name: Terraform Workflow
+name: Terraform AWS Workflow
 
 on:
   workflow_dispatch:
-
-jobs:
-  terraform:
-    runs-on: ubuntu-latest
-    # env:
-    #   working-directory: ../../1_devops_infra/2_hub_infra/1_hub_servers
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
-
-      - name: Terraform Init
-        run: terraform init
+    # Inputs the workflow expects.
+    inputs:
+      tfpath:
+        description: 'TF File Path'     
+        required: false
+        default: 'aws_samples/create_ec2'
