@@ -23,8 +23,11 @@ jobs:
           path: ${{ env.TF_FOLDER }}  # Use 'with' to specify path
 
       - name: List Directory Contents
+        working-directory: ${{ env.TF_FOLDER }}
         run: ls -R ${{ env.TF_FOLDER }}
+
       - name: Debug Info
+        working-directory: ${{ env.TF_FOLDER }}
         run: |
             pwd
             ls -R
@@ -41,6 +44,7 @@ jobs:
 
       - name: Terraform fmt
         id: fmt
+        working-directory: ${{ env.TF_FOLDER }}
         run: |
           terraform --version  # Prints Terraform version
           terraform fmt  # Formats Terraform code
@@ -48,19 +52,23 @@ jobs:
 
       - name: Terraform Init
         id: init
+        working-directory: ${{ env.TF_FOLDER }}
         run: terraform init
 
       - name: Terraform Validate
         id: validate
+        working-directory: ${{ env.TF_FOLDER }}
         run: terraform validate -no-color  # Validates the Terraform configuration
         #continue-on-error: true  # Continue to the next step even if there are validation errors
 
       - name: Terraform Plan
         id: plan
+        working-directory: ${{ env.TF_FOLDER }}
         run:  terraform plan -no-color --var-file=3hub.tfvars -target=module.hub_backend_s3  # Creates an execution plan for Terraform changes
        # continue-on-error: true  # Continue to the next step even if there is a plan error
 
       - name: Terraform Apply
         id: Apply
+        working-directory: ${{ env.TF_FOLDER }}
         run: terraform apply -auto-approve -var-file=3hub.tfvars -target=module.hub_backend_s3  # Applies Terraform changes (auto-approve without asking for confirmation)
        # continue-on-error: true  # Continue to the next step even if there is an apply error
