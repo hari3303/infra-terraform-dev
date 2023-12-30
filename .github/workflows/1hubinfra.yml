@@ -1,3 +1,11 @@
+name: 1 HUB INFRA
+
+# on:
+#   workflow_dispatch:
+#   # push:
+#   #   branches:
+#   #     - main
+
 on:
   workflow_dispatch:
     # Inputs the workflow expects.
@@ -8,24 +16,37 @@ on:
         default: '1_devops_infra/2_hub_infra/1_hub_servers'
 jobs:
   tf_code_check:
-    name: Terraform Validation and Build
+    name: Hub infra Terraform Validation and Build
     runs-on: ubuntu-latest
 
     if: ${{ inputs.tfpath }} 
+
     steps:
-    - uses: actions/checkout@v2.5.0        
+    - name: Checkout Code
+      uses: actions/checkout@v2.5.0   
+
+    - name: AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'  # Access key for AWS authentication
+          aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'  # Secret key for AWS authentication
+          aws-region: us-east-1  # AWS region to operate in
+
     - name: Setup Terraform CLI
       uses: hashicorp/setup-terraform@v2.0.2
 
     - name: Terraform fmt
+      id: fmt
       run: |
         echo `pwd`
         echo "tfpath ${{ github.event.inputs.tfpath }}"
-        cd ${{ github.event.inputs.tfpath }}
+        cd ${{ github.event.inputs.tfpath }} 
+      #In the context of GitHub Actions workflows, github.event refers to the event payload that triggered the workflow. GitHub Actions workflows can be triggered by various events, such as push events, pull request events, issue comment events, and more. The github.event.inputs refers to the input parameters provided when manually triggering a workflow_dispatch event.
         echo "** Running Terraform fmt**"
         terraform fmt
 
     - name: Terraform init
+      id: init #the id field is optional and is used to uniquely identify a step within the workflow. It can be helpful when you want to reference the output of a specific step in subsequent steps or when you want to conditionally execute steps based on the success or failure of a specific step.  name: Some Other Step   # run: echo "Output of Terraform Init: ${{ steps.init.outputs.some_output }}"
       run: |
         echo `pwd`
         echo "tfpath ${{ github.event.inputs.tfpath }}"
@@ -33,7 +54,8 @@ jobs:
         echo "** Running Terraform Init**"
         terraform init
 
-    - name: Terraform validate 
+    - name: Terraform validate
+      id: validate
       run: |
         echo `pwd`
         echo "tfpath ${{ github.event.inputs.tfpath }}"
@@ -41,10 +63,22 @@ jobs:
         echo "** Running Terraform Validate**"
         terraform validate
 
-    - name: Terraform Plan 
+    - name: Terraform Plan
+      id: plan 
       run: |
         echo `pwd`
         echo "tfpath ${{ github.event.inputs.tfpath }}"
         cd ${{ github.event.inputs.tfpath }}
         echo "** Running Terraform Plan**"
-        terraform plan --var-file=3hub.tfvars -target module.hub_backend_s3
+        terraform plan --var-file=3hub.tfvars -target module.hub_network
+      continue-on-error: true  # Continue to the next step even if there is a plan error
+
+    - name: Terraform apply
+      id: Apply 
+      run: |
+        echo `pwd`
+        echo "tfpath ${{ github.event.inputs.tfpath }}"
+        cd ${{ github.event.inputs.tfpath }}
+        echo "** Running Terraform apply**"
+        terraform apply --var-file=3hub.tfvars --auto-approve -target module.hub_network
+      continue-on-error: true  # Continue to the next step even if there is a plan error
