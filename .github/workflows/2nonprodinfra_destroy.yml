@@ -1,4 +1,4 @@
-name: 1 NON PROD INFRA - Destroy
+name: 2 NON PROD INFRA - Destroy
 
 on:
   workflow_dispatch:
