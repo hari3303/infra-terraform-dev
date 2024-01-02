@@ -55,3 +55,6 @@ elk_key_name = "key"
 elk_instance_name = "5_elk_server"
 
 ###################################################################
+bucketname = "terraform-state-hbseries"
+acl = "private"
+versioning = false
