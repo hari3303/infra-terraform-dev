@@ -1,0 +1,51 @@
+name: 1 NON PROD INFRA - Destroy
+
+on:
+  workflow_dispatch:
+    # Inputs the workflow expects.
+    inputs:
+      tfpath:
+        description: 'TF File Path'     
+        required: false
+        default: '1_devops_infra/3_spoke_infra/1_non_prod/1_non_prod_server'
+
+jobs:
+  tf_destroy:
+    name: NON prod infra Terraform Destroy
+    runs-on: ubuntu-latest
+
+    if: ${{ inputs.tfpath }} 
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2.5.0   
+
+    - name: AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'  # Access key for AWS authentication
+        aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'  # Secret key for AWS authentication
+        aws-region: us-east-1  # AWS region to operate in
+
+    - name: Setup Terraform CLI
+      uses: hashicorp/setup-terraform@v2.0.2
+
+    - name: Terraform Init
+      id: init
+      run: |
+       echo `pwd`
+       echo "tfpath ${{ github.event.inputs.tfpath }}"
+       cd ${{ github.event.inputs.tfpath }}
+       echo "** Running Terraform Init**"
+       terraform init
+
+
+    - name: Terraform destroy
+      id: destroy 
+      run: |
+        echo `pwd`
+        echo "tfpath ${{ github.event.inputs.tfpath }}"
+        cd ${{ github.event.inputs.tfpath }}
+        echo "** Running Terraform Destroy**"
+        terraform destroy --var-file=3nonprod.tfvars --auto-approve -target module.non_prod_network
+      #continue-on-error: true  # Continue to the next step even if there is a destroy error

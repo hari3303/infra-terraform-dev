@@ -1,4 +1,4 @@
-name: 2 NON PROD INFRA
+name: 3 PROD INFRA
 
 on:
   workflow_dispatch:
@@ -7,11 +7,11 @@ on:
       tfpath:
         description: 'TF File Path'     
         required: false
-        default: '1_devops_infra/3_spoke_infra/1_non_prod/1_non_prod_server'
+        default: '1_devops_infra/2_hub_infra/1_hub_servers'
 
 jobs:
   tf_code_check:
-    name: NON PROD infra Terraform Validation and Build
+    name: PROD infra Terraform Validation and Build
     runs-on: ubuntu-latest
 
     if: ${{ inputs.tfpath }} 
@@ -64,7 +64,7 @@ jobs:
         echo "tfpath ${{ github.event.inputs.tfpath }}"
         cd ${{ github.event.inputs.tfpath }}
         echo "** Running Terraform Plan**"
-        terraform plan --var-file=3hub.tfvars -target module.non_prod_network
+        terraform plan --var-file=3hub.tfvars -target module.hub_network
       continue-on-error: true  # Continue to the next step even if there is a plan error
 
     - name: Terraform apply
@@ -74,7 +74,7 @@ jobs:
         echo "tfpath ${{ github.event.inputs.tfpath }}"
         cd ${{ github.event.inputs.tfpath }}
         echo "** Running Terraform apply**"
-        terraform apply --var-file=3hub.tfvars --auto-approve -target module.non_prod_network
+        terraform apply --var-file=3hub.tfvars --auto-approve -target module.hub_network
       continue-on-error: true  # Continue to the next step even if there is a plan error
 
     - name: Terraform destroy
@@ -84,5 +84,5 @@ jobs:
         echo "tfpath ${{ github.event.inputs.tfpath }}"
         cd ${{ github.event.inputs.tfpath }}
         echo "** Running Terraform destroy**"
-        terraform destroy --var-file=3hub.tfvars --auto-approve -target module.non_prod_network
+        terraform destroy --var-file=3hub.tfvars --auto-approve -target module.hub_network
     
