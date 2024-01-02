@@ -47,5 +47,5 @@ jobs:
         echo "tfpath ${{ github.event.inputs.tfpath }}"
         cd ${{ github.event.inputs.tfpath }}
         echo "** Running Terraform Destroy**"
-        terraform destroy --var-file=3hub.tfvars --auto-approve -target module.backend_s3
+        terraform destroy --var-file=3hub.tfvars --auto-approve -target module.hub_network
       #continue-on-error: true  # Continue to the next step even if there is a destroy error
