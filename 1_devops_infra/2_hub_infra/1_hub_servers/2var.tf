@@ -56,6 +56,3 @@ variable "elk_key_name" {}
 variable "elk_instance_name" {}
 
 ###############################################################
-variable "bucketname" {}
-variable "acl" {}
-variable "versioning" {}
