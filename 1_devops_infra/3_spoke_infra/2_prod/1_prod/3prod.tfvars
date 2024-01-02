@@ -1,7 +1,3 @@
-bucketname = 3-prod-terraform-state-hbseries
-acl = "private"
-versioning = false
-prevent_destroy = false
 
 vpc_cidr           = "10.4.0.0/16"
 vpc_name           = "1_prod_infra"

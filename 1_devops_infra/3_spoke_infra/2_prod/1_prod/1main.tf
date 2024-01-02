@@ -4,14 +4,14 @@ provider "aws" {
   #region     = "us-east-1"
   # #version = "~>2.0" #means from 2.0 version to 3.0 in between a stable version is downloaded 
 }
-module "prod_backend_s3" {
-  source = "../../../1_hub_and_spoke_basic_modules/1_network/9_backend_terraform"
-  
-  bucketname = var.bucketname
-  acl = var.acl  
-  versioning = var.versioning  
-  prevent_destroy = var.prevent_destroy
-  
+terraform {
+  backend "s3" {
+    bucket         = "terraform-state-hbseries"  # create a  pvt S3 bucket first 
+    key            = "3prodterraform.tfstate"  # State file name
+    region         = "us-east-1"  # Set the AWS region where the S3 bucket is located
+    encrypt        = true  # Enable server-side encryption for the state file
+    #dynamodb_table = "terraform_locks"  # Optional: Use a DynamoDB table for state locking
+  }
 }
 
 module "prod_network" {

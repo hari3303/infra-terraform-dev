@@ -7,7 +7,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket         = "terraform-state-hbseries"  # create a  pvt S3 bucket first 
-    key            = "nonprodterraform.tfstate"  # State file name
+    key            = "2nonprodterraform.tfstate"  # State file name
     region         = "us-east-1"  # Set the AWS region where the S3 bucket is located
     encrypt        = true  # Enable server-side encryption for the state file
     #dynamodb_table = "terraform_locks"  # Optional: Use a DynamoDB table for state locking
