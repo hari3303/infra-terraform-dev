@@ -8,7 +8,7 @@ on:
         required: false
         default: '1_devops_infra/2_hub_infra/1_hub_servers'
       infra:
-        description: 'Jobs to execute (e.g., "apply_network" or "apply_network, apply_sg")'
+        description: 'Jobs to execute (e.g., "apply_network" or "apply_network, apply_sg, apply_nat, apply_jenkins_instance, apply_sonarqube_instance, apply_prometheus_instance, apply_grafana_instance, apply_elk_instance")'
         required: true
         #default: 'apply_network'
 
@@ -113,4 +113,118 @@ jobs:
           cd ${{ github.event.inputs.tfpath }}
           echo "** Running Terraform apply sg**"
           terraform apply --var-file=3hub.tfvars --auto-approve -target module.sg
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+
+  apply_nat:
+    name: Terraform_apply_nat
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'apply_nat')
+
+    steps:
+      - name: Terraform apply NAT
+        id: ApplyNat
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform apply NAT**"
+          terraform apply --var-file=3hub.tfvars --auto-approve -target module.nat
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+
+  apply_jenkins_instance:
+    name: Terraform_apply_jenkins_instance
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'apply_jenkins_instance')
+
+    steps:
+      - name: Terraform apply jenkins_instance
+        id: ApplyJenkins
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform apply jenkins**"
+          terraform apply --var-file=3hub.tfvars --auto-approve -target module.jenkins_instance
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+
+
+
+  apply_sonarqube_instance:
+    name: Terraform_apply_sonarqube_instance
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'apply_sonarqube_instance')
+
+    steps:
+      - name: Terraform apply sonarqube_instance
+        id: Applysonarqube_instance
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform apply sonarqube_instance**"
+          terraform apply --var-file=3hub.tfvars --auto-approve -target module.sonarqube_instance
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+
+
+
+  apply_prometheus_instance:
+    name: Terraform_apply_prometheus_instance
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'apply_prometheus_instance')
+
+    steps:
+      - name: Terraform apply prometheus_instance
+        id: Applyprometheus_instance
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform apply prometheus_instance**"
+          terraform apply --var-file=3hub.tfvars --auto-approve -target module.prometheus_instance
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+
+
+
+
+  apply_grafana_instance:
+    name: Terraform_apply_grafana_instance
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'apply_grafana_instance')
+
+    steps:
+      - name: Terraform apply grafana_instance
+        id: Applygrafana_instance
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform apply grafana_instance**"
+          terraform apply --var-file=3hub.tfvars --auto-approve -target module.grafana_instance
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+  apply_elk_instance:
+    name: Terraform_apply_elk_instance
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'apply_elk_instance')
+
+    steps:
+      - name: Terraform apply elk_instance
+        id: Applyelk_instance
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform apply elk_instance**"
+          terraform apply --var-file=3hub.tfvars --auto-approve -target module.elk_instance
       # Continue-on-error: true  # Continue to the next step even if there is a plan error
