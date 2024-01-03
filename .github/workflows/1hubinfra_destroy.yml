@@ -8,7 +8,7 @@ on:
         description: 'TF File Path'     
         required: false
         default: '1_devops_infra/2_hub_infra/1_hub_servers'
-    infra:
+      infra:
         description: 'Jobs to execute (e.g., "destroy_network" or "destroy_network, destroy_sg, destroy_nat, destroy_jenkins_instance, destroy_sonarqube_instance, destroy_prometheus_instance, destroy_grafana_instance, destroy_elk_instance")'
         required: true
 
