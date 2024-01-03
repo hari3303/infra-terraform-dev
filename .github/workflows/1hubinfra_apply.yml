@@ -81,7 +81,7 @@ jobs:
     #   #ontinue-on-error: true  # Continue to the next step even if there is a plan error
 
   apply_network:
-    name: Terraform_apply_network
+    name: network
     runs-on: ubuntu-latest
 
     if: contains(github.event.inputs.infra, 'apply_network')
@@ -99,7 +99,7 @@ jobs:
 
  
   apply_sg:
-    name: Terraform_apply_sg
+    name: sg
     runs-on: ubuntu-latest
 
     if: contains(github.event.inputs.infra, 'apply_sg')
@@ -117,7 +117,7 @@ jobs:
 
 
   apply_nat:
-    name: Terraform_apply_nat
+    name: nat
     runs-on: ubuntu-latest
 
     if: contains(github.event.inputs.infra, 'apply_nat')
@@ -135,7 +135,7 @@ jobs:
 
 
   apply_jenkins_instance:
-    name: Terraform_apply_jenkins_instance
+    name: jenkins_instance
     runs-on: ubuntu-latest
 
     if: contains(github.event.inputs.infra, 'apply_jenkins_instance')
@@ -155,7 +155,7 @@ jobs:
 
 
   apply_sonarqube_instance:
-    name: Terraform_apply_sonarqube_instance
+    name: sonarqube_instance
     runs-on: ubuntu-latest
 
     if: contains(github.event.inputs.infra, 'apply_sonarqube_instance')
@@ -175,7 +175,7 @@ jobs:
 
 
   apply_prometheus_instance:
-    name: Terraform_apply_prometheus_instance
+    name: prometheus_instance
     runs-on: ubuntu-latest
 
     if: contains(github.event.inputs.infra, 'apply_prometheus_instance')
@@ -196,7 +196,7 @@ jobs:
 
 
   apply_grafana_instance:
-    name: Terraform_apply_grafana_instance
+    name: grafana_instance
     runs-on: ubuntu-latest
 
     if: contains(github.event.inputs.infra, 'apply_grafana_instance')
@@ -213,7 +213,7 @@ jobs:
       # Continue-on-error: true  # Continue to the next step even if there is a plan error
 
   apply_elk_instance:
-    name: Terraform_apply_elk_instance
+    name: elk_instance
     runs-on: ubuntu-latest
 
     if: contains(github.event.inputs.infra, 'apply_elk_instance')
