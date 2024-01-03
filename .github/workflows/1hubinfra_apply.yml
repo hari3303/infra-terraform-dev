@@ -81,36 +81,36 @@ jobs:
     #   #ontinue-on-error: true  # Continue to the next step even if there is a plan error
 
   apply_network:
-    name: Terraform apply network
+    name: Terraform_apply_network
     runs-on: ubuntu-latest
 
-   # if: ${{ github.event.inputs.infra == 'apply_network' }}
-    if: contains(split(',', github.event.inputs.infra), 'apply_network')
+    if: contains(github.event.inputs.infra, 'apply_network')
 
     steps:
-      - name: Terraform apply network 
-        id: apply network
+      - name: Terraform apply network
+        id: ApplyNetwork
         run: |
           echo `pwd`
           echo "tfpath ${{ github.event.inputs.tfpath }}"
           cd ${{ github.event.inputs.tfpath }}
-          echo "** Running Terraform apply**"
+          echo "** Running Terraform apply network**"
           terraform apply --var-file=3hub.tfvars --auto-approve -target module.hub_network
-      #ontinue-on-error: true  # Continue to the next step even if there is a plan error
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
  
   apply_sg:
-    name: Terraform apply network
+    name: Terraform_apply_instances
     runs-on: ubuntu-latest
 
-    #if: ${{ github.event.inputs.infra == 'apply_sg' }}
-    if: contains(split(',', github.event.inputs.infra), 'apply_sg')
+    if: contains(github.event.inputs.infra, 'apply_sg')
 
     steps:
-      - name: Terraform apply network 
-        id: apply network
+      - name: Terraform apply sg
+        id: ApplySg
         run: |
           echo `pwd`
           echo "tfpath ${{ github.event.inputs.tfpath }}"
           cd ${{ github.event.inputs.tfpath }}
-          echo "** Running Terraform apply**"
-          terraform apply --var-file=3hub.tfvars --auto-approve -target module.hub_sg
+          echo "** Running Terraform apply sg**"
+          terraform apply --var-file=3hub.tfvars --auto-approve -target module.sg
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
