@@ -99,7 +99,7 @@ jobs:
 
  
   apply_sg:
-    name: Terraform_apply_instances
+    name: Terraform_apply_sg
     runs-on: ubuntu-latest
 
     if: contains(github.event.inputs.infra, 'apply_sg')
