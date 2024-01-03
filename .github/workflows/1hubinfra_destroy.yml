@@ -8,6 +8,9 @@ on:
         description: 'TF File Path'     
         required: false
         default: '1_devops_infra/2_hub_infra/1_hub_servers'
+    infra:
+        description: 'Jobs to execute (e.g., "destroy_network" or "destroy_network, destroy_sg, destroy_nat, destroy_jenkins_instance, destroy_sonarqube_instance, destroy_prometheus_instance, destroy_grafana_instance, destroy_elk_instance")'
+        required: true
 
 jobs:
   tf_destroy:
@@ -20,12 +23,12 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v2.5.0   
 
-    - name: AWS Credentials
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'  # Access key for AWS authentication
-        aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'  # Secret key for AWS authentication
-        aws-region: us-east-1  # AWS region to operate in
+    # - name: AWS Credentials
+    #   uses: aws-actions/configure-aws-credentials@v1
+    #   with:
+    #     aws-access-key-id: '${{ secrets.AWS_ACCESS_KEY_ID }}'  # Access key for AWS authentication
+    #     aws-secret-access-key: '${{ secrets.AWS_SECRET_ACCESS_KEY }}'  # Secret key for AWS authentication
+    #     aws-region: us-east-1  # AWS region to operate in
 
     - name: Setup Terraform CLI
       uses: hashicorp/setup-terraform@v2.0.2
@@ -40,12 +43,156 @@ jobs:
        terraform init
 
 
-    - name: Terraform destroy
-      id: destroy 
-      run: |
-        echo `pwd`
-        echo "tfpath ${{ github.event.inputs.tfpath }}"
-        cd ${{ github.event.inputs.tfpath }}
-        echo "** Running Terraform Destroy**"
-        terraform destroy --var-file=3hub.tfvars --auto-approve -target module.hub_network
-      #continue-on-error: true  # Continue to the next step even if there is a destroy error
+    # - name: Terraform destroy
+    #   id: destroy 
+    #   run: |
+    #     echo `pwd`
+    #     echo "tfpath ${{ github.event.inputs.tfpath }}"
+    #     cd ${{ github.event.inputs.tfpath }}
+    #     echo "** Running Terraform Destroy**"
+    #     terraform destroy --var-file=3hub.tfvars --auto-approve -target module.hub_network
+    #   #continue-on-error: true  # Continue to the next step even if there is a destroy error
+  destroy_network:
+    name: network
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'destroy_network')
+
+    steps:
+      - name: Terraform destroy network
+        id: destroyNetwork
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform destroy network**"
+          terraform destroy --var-file=3hub.tfvars --auto-approve -target module.hub_network
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+ 
+  destroy_sg:
+    name: sg
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'destroy_sg')
+
+    steps:
+      - name: Terraform destroy sg
+        id: destroySg
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform destroy sg**"
+          terraform destroy --var-file=3hub.tfvars --auto-approve -target module.sg
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+
+  destroy_nat:
+    name: nat
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'destroy_nat')
+
+    steps:
+      - name: Terraform destroy NAT
+        id: destroyNat
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform destroy NAT**"
+          terraform destroy --var-file=3hub.tfvars --auto-approve -target module.nat
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+
+  destroy_jenkins_instance:
+    name: jenkins_instance
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'destroy_jenkins_instance')
+
+    steps:
+      - name: Terraform destroy jenkins_instance
+        id: destroyJenkins
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform destroy jenkins**"
+          terraform destroy --var-file=3hub.tfvars --auto-approve -target module.jenkins_instance
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+
+
+
+  destroy_sonarqube_instance:
+    name: sonarqube_instance
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'destroy_sonarqube_instance')
+
+    steps:
+      - name: Terraform destroy sonarqube_instance
+        id: destroysonarqube_instance
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform destroy sonarqube_instance**"
+          terraform destroy --var-file=3hub.tfvars --auto-approve -target module.sonarqube_instance
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+
+
+
+  destroy_prometheus_instance:
+    name: prometheus_instance
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'destroy_prometheus_instance')
+
+    steps:
+      - name: Terraform destroy prometheus_instance
+        id: destroyprometheus_instance
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform destroy prometheus_instance**"
+          terraform destroy --var-file=3hub.tfvars --auto-approve -target module.prometheus_instance
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+  destroy_grafana_instance:
+    name: grafana_instance
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'destroy_grafana_instance')
+
+    steps:
+      - name: Terraform destroy grafana_instance
+        id: destroygrafana_instance
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform destroy grafana_instance**"
+          terraform destroy --var-file=3hub.tfvars --auto-approve -target module.grafana_instance
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
+
+  destroy_elk_instance:
+    name: elk_instance
+    runs-on: ubuntu-latest
+
+    if: contains(github.event.inputs.infra, 'destroy_elk_instance')
+
+    steps:
+      - name: Terraform destroy elk_instance
+        id: destroyelk_instance
+        run: |
+          echo `pwd`
+          echo "tfpath ${{ github.event.inputs.tfpath }}"
+          cd ${{ github.event.inputs.tfpath }}
+          echo "** Running Terraform destroy elk_instance**"
+          terraform destroy --var-file=3hub.tfvars --auto-approve -target module.elk_instance
+      # Continue-on-error: true  # Continue to the next step even if there is a plan error
