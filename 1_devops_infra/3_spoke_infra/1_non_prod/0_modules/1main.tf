@@ -78,9 +78,11 @@ role = aws_iam_role.ec2_kops_role.name
 resource "aws_instance" "server" {
     ami = var.ami
     availability_zone = var.availability_zone
+    #availability_zones =var.availability_zones
     instance_type = var.instance_type
     key_name = var.key_name
     subnet_id = var.subnet_id
+    #subnet_ids = var.subnet_ids
     vpc_security_group_ids = ["${var.vpc_security_group_ids}"]
     # associate_public_ip_address = true
     associate_public_ip_address = var.associate_public_ip_address
