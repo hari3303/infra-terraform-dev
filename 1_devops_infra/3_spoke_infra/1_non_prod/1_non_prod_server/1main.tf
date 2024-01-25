@@ -53,6 +53,7 @@ module "kops_mgmt" {
   instance_type = var.kops_instance_type
   key_name = var.kops_key_name
   subnet_id = module.non_prod_network.pub_subnet_id_1
+  #subnet_ids  = [module.non_prod_network.pub_subnet_id_1, module.non_prod_network.pub_subnet_id_2]  # Use subnets from different AZs
   # subnet_id = module.nat.pvt_subnet_id
   vpc_security_group_ids = module.sg.vpc_security_group_ids
   instance_name = var.kops_instance_name
