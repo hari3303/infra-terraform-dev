@@ -49,7 +49,7 @@ module "kops_mgmt" {
   source = "../0_modules"  
   
   ami = var.kops_ami
-  availability_zone = var.kops_availability_zone
+  #availability_zone = var.kops_availability_zone i can remove this line because i mentioned in child module as us east 1a or 1b to each subnet 
   #availability_zones = var.kops_availability_zones
   instance_type = var.kops_instance_type
   key_name = var.kops_key_name
