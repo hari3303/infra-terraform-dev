@@ -50,6 +50,7 @@ module "kops_mgmt" {
   
   ami = var.kops_ami
   availability_zone = var.kops_availability_zone
+  #availability_zones = var.kops_availability_zones
   instance_type = var.kops_instance_type
   key_name = var.kops_key_name
   subnet_id = module.non_prod_network.pub_subnet_id_1
