@@ -17,6 +17,7 @@ variable "pvt_rt" {}
 
 variable "kops_ami" {}
 variable "kops_availability_zone" {}
+#variable "kops_availability_zones" {}
 variable "kops_instance_type" {}
 variable "kops_key_name" {}
 variable "kops_instance_name" {}
