@@ -16,7 +16,7 @@ pvt_rt = "1_non_prod_pvt-route-table"
 
 kops_ami = "ami-0557a15b87f6559cf"
 kops_availability_zone = "us-east-1a"
-#kops_availability_zone = ["us-east-1a", "us-east-1b"]  # Specify the desired AZs
+#kops_availability_zones = ["us-east-1a", "us-east-1b"]  # Specify the desired AZs
 kops_instance_type = "t2.micro"
 kops_key_name = "non_prod_key"
 kops_instance_name = "non_prod_kops_server"
